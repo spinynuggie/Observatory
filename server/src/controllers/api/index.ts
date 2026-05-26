@@ -140,9 +140,10 @@ export default (app: App) => {
     )
     .get(
       "v2/s/:id",
-      async ({ BeatmapsManagerInstance, params: { id }, set }) => {
+      async ({ BeatmapsManagerInstance, params: { id }, query, set }) => {
         const data = await BeatmapsManagerInstance.getBeatmapSet({
           beatmapSetId: id,
+          allowMissingNonBeatmapValues: query.allowMissingNonBeatmapValues,
         });
 
         if (data.source) {
@@ -155,6 +156,9 @@ export default (app: App) => {
       {
         params: t.Object({
           id: t.Numeric(),
+        }),
+        query: t.Object({
+          allowMissingNonBeatmapValues: t.Optional(t.Boolean()),
         }),
         tags: ["v2"],
       },

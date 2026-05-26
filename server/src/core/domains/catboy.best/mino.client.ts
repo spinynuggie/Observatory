@@ -134,7 +134,7 @@ export class MinoClient extends BaseClient {
     ctx: GetBeatmapSetOptions,
   ): Promise<ResultWithStatus<Beatmapset>> {
     if (ctx.beatmapSetId) {
-      return await this.getBeatmapSetById(ctx.beatmapSetId);
+      return await this.getBeatmapSetById(ctx);
     }
 
     throw new Error("Invalid arguments");
@@ -183,10 +183,18 @@ export class MinoClient extends BaseClient {
   }
 
   private async getBeatmapSetById(
-    beatmapSetId: number,
+    ctx: GetBeatmapSetOptions,
   ): Promise<ResultWithStatus<Beatmapset>> {
     const result = await this.api.get<Beatmapset>(
-            `api/v2/s/${beatmapSetId}`,
+            `api/v2/s/${ctx.beatmapSetId}`,
+            {
+              config: {
+                params: {
+                  allowMissingNonBeatmapValues:
+                    ctx.allowMissingNonBeatmapValues,
+                },
+              },
+            },
     );
 
     if (!result || result.status !== 200 || !result.data) {

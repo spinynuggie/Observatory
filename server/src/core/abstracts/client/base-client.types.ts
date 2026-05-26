@@ -19,6 +19,7 @@ export type SearchBeatmapsetsOptions = {
 
 export type GetBeatmapSetOptions = {
   beatmapSetId?: number;
+  allowMissingNonBeatmapValues?: boolean;
 };
 
 export type GetBeatmapsOptions = {

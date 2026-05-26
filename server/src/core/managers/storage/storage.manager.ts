@@ -93,7 +93,7 @@ export class StorageManager {
       this.cacheService.insertBeatmapset(entity);
     }
 
-    return entity;
+    return entity ?? undefined;
   }
 
   async getBeatmapSetsByBeatmapIds(
